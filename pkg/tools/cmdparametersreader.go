@@ -2,7 +2,7 @@ package tools
 
 import "errors"
 
-// ErrNotEnoughArguments é um erro que indica que não foram fornecidos argumentos suficientes.
+// ErrNotEnoughArguments is an error returned when there are not enough command line arguments.
 var ErrNotEnoughArguments = errors.New("not enough arguments")
 
 // ReadCmdParameters reads the second command line argument.

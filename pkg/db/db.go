@@ -17,25 +17,24 @@ import (
 // - *sql.DB: A pointer to the sql.DB object representing the database connection. This is returned if the connection is successfully verified.
 // - error: An error object that indicates why the connection verification failed. This is nil if the connection is successful.
 func ConnectToDB() (*sql.DB, error) {
-	// Usando variáveis de ambiente para a string de conexão
+	// Getting the database connection information from the environment variables
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	dbname := os.Getenv("DB_NAME")
 
-	// Construindo a string de conexão
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
-	// Conectando ao banco de dados
+	// Connect to the database
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		return nil, err
 	}
 
-	// Verificando a conexão
+	// Check if the connection is successful
 	err = db.Ping()
 	if err != nil {
 		return nil, err

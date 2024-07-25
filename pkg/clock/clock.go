@@ -11,10 +11,10 @@ import (
 
 // Clock struct holds the configuration path and the actual configuration data.
 type Clock struct {
-	ConfigManager     *config.ConfigManager
-	TimeProvider      TimeProvider
-	ExitProvider      ExitProvider
-	SignalsRepository repository.ISignalsRepository
+	ConfigManager *config.ConfigManager
+	TimeProvider  TimeProvider
+	ExitProvider  ExitProvider
+	SignalStore   repository.SignalStore
 }
 
 // ExitProvider is an interface that defines the method for exiting the program.
@@ -32,12 +32,12 @@ func (r RealExitProvider) Exit(code int) {
 
 // NewClock initializes a new Clock instance with the given configuration path.
 // It loads the configuration from the specified path and returns a Clock instance or an error.
-func NewClock(cm *config.ConfigManager, timeProvider TimeProvider, exitProvider ExitProvider, signalsRepository repository.ISignalsRepository) (*Clock, error) {
+func NewClock(cm *config.ConfigManager, timeProvider TimeProvider, exitProvider ExitProvider, signalsStore repository.SignalStore) (*Clock, error) {
 	return &Clock{
-		ConfigManager:     cm,
-		TimeProvider:      timeProvider,
-		ExitProvider:      exitProvider,
-		SignalsRepository: signalsRepository,
+		ConfigManager: cm,
+		TimeProvider:  timeProvider,
+		ExitProvider:  exitProvider,
+		SignalStore:   signalsStore,
 	}, nil
 }
 
@@ -64,7 +64,7 @@ func (c *Clock) Run() error {
 		}
 
 		fmt.Println(signal) // Each second
-		err := c.SignalsRepository.SaveSignal(signal, now)
+		err := c.SignalStore.Add(signal, now)
 		if err != nil {
 			return err
 		}

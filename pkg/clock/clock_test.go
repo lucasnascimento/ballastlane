@@ -19,7 +19,7 @@ func TestNewClock(t *testing.T) {
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
-	mockRepo := repository.MockSignalsRepository{}
+	mockRepo := repository.MockSignalStore{}
 	clock, err := NewClock(cm, RealTimeProvider{}, RealExitProvider{}, &mockRepo)
 
 	assert.NoError(t, err)
@@ -37,7 +37,7 @@ func TestClock_Run(t *testing.T) {
 	}
 
 	t.Run("OnMinuteShouldPrintTickTockTick", func(t *testing.T) {
-		mockRepo := repository.MockSignalsRepository{}
+		mockRepo := repository.MockSignalStore{}
 		mockRepo.On("SaveSignal", mock.AnythingOfType("string"), mock.AnythingOfType("time.Time")).Return(nil)
 		clock, err := NewClock(
 			cm, MockTimeProvider{
@@ -69,7 +69,7 @@ func TestClock_Run(t *testing.T) {
 	})
 
 	t.Run("OnHoutShouldPrintTickBongTick", func(t *testing.T) {
-		mockRepo := repository.MockSignalsRepository{}
+		mockRepo := repository.MockSignalStore{}
 		mockRepo.On("SaveSignal", mock.AnythingOfType("string"), mock.AnythingOfType("time.Time")).Return(nil)
 		clock, err := NewClock(
 			cm, MockTimeProvider{

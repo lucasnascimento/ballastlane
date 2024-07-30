@@ -43,11 +43,11 @@ func main() {
 	}
 	defer db.CloseDB(database)
 
-	// Create a new signals repository
-	signalsRepository := repository.NewSignalsRepository(database)
+	// Create a new signals store
+	signalStore := repository.NewSignalStore(database)
 
 	// Create a new clock instance
-	clock, err := clock.NewClock(cm, clock.RealTimeProvider{}, clock.RealExitProvider{}, signalsRepository)
+	clock, err := clock.NewClock(cm, clock.RealTimeProvider{}, clock.RealExitProvider{}, signalStore)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

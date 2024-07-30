@@ -1,4 +1,10 @@
-# BallastLane TechTest Project
+# GO Technical Exercise rev.1
+
+This repository shows my implementation of this:
+
+[`Go Technical Exercise rev.1.pdf`](./docs/GO%20Technical%20Exercise%20rev.1.pdf)
+
+[`Go Technical Exercise rev.1.md`](./docs/GO%20Technical%20Exercise%20rev.1.md)
 
 ### Running Solution ###
 
